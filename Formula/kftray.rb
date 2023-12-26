@@ -25,7 +25,7 @@ class Kftray < Formula
         prefix.install "src-tauri/target/release/bundle/macos/#{app_bundle}"
         bin.install_symlink prefix/"kftray.app/Contents/MacOS/kftray"
       elsif OS.linux?
-        system "npm", "run", "tauri", "build", "--", "-b", "appimage"
+        system "npm", "run", "tauri", "build", "-b", "appimage"
         appimage = "src-tauri/target/release/bundle/linux/kftray.AppImage"
         bin.install appimage
         chmod 0755, bin/"kftray.AppImage"

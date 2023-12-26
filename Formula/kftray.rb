@@ -1,24 +1,51 @@
+require "language/node"
+
 class Kftray < Formula
   desc "A tray app with Tauri and React"
   homepage "https://github.com/hcavarsan/kftray"
-  version "0.3.0"
+  head "https://github.com/hcavarsan/kftray.git", branch: "main"
   license "MIT"
+  version "HEAD"
 
-  if OS.mac?
-    url "https://github.com/hcavarsan/kftray/releases/download/v#{version}/kftray_universal.app.tar.gz"
-    sha256 "3e56fae80fcf021b2a518586170efc612ccffee837493782005d0a2cfbd32d8e"
-  elsif OS.linux?
-    url "https://github.com/hcavarsan/kftray/releases/download/v#{version}/kftray_#{version}_amd64.AppImage.tar.gz"
-    sha256 "ac6f7761df0660fe9df2a22febf28a04ce566fe66d45778f499a669c38342aa3"
-  end
+  depends_on "rust" => :build
+  depends_on "node"
 
   def install
-    if OS.mac?
-      prefix.install bin.glob("*.app")
-      bin.write_exec_script "kftray.app/Contents/MacOS/kftray"
-    elsif OS.linux?cp
-      bin.install "kftray.AppImage" => "kftray"
-      chmod 0755, bin/"kftray"
+    ENV["CI"] = "true"
+
+    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "npm", "install", "pnpm"
+    system "npm", "install"
+
+    if build.head?
+
+      if OS.mac?
+        system "npm", "run", "tauri", "build", "--", "-b", "app"
+        app_bundle = "kftray.app"
+        prefix.install "src-tauri/target/release/bundle/macos/#{app_bundle}"
+        bin.install_symlink prefix/"kftray.app/Contents/MacOS/kftray"
+      elsif OS.linux?
+        system "npm", "run", "tauri", "build", "--", "-b", "appimage"
+        appimage = "src-tauri/target/release/bundle/linux/kftray.AppImage"
+        bin.install appimage
+        chmod 0755, bin/"kftray.AppImage"
+      end
     end
+  end
+
+  def caveats
+    s = ""
+    if OS.mac?
+      s += <<~EOS
+        To link kftray to the Applications folder, you can run the following command:
+          ln -sf #{prefix}/kftray.app /Applications/kftray.app
+      EOS
+    elsif OS.linux?
+      s += <<~EOS
+        To integrate kftray into your system, you can run the following command:
+          #{bin}/kftray.AppImage --integrate
+      EOS
+    end
+    s
   end
 end

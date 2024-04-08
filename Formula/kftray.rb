@@ -12,7 +12,7 @@ class Kftray < Formula
 
   
   on_linux do
-    depends_on "webkit2gtk3-devel"
+    depends_on "webkitgtk"
   end
 
   def install

@@ -10,6 +10,11 @@ class Kftray < Formula
   depends_on "rust" => :build
   depends_on "node"
 
+  
+  on_linux do
+    depends_on "webkit2gtk3-devel"
+  end
+
   def install
     ENV["CI"] = "true"
 

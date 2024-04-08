@@ -13,6 +13,7 @@ class Kftray < Formula
   
   on_linux do
     depends_on "webkitgtk"
+    depends_on "libsoup" 
   end
 
   def install

@@ -11,11 +11,6 @@ class Kftray < Formula
   depends_on "node"
 
   
-  on_linux do
-    depends_on "gtk+3" 
-    depends_on "webkitgtk"
-    depends_on "libsoup@2"
-  end
 
   def install
     ENV["CI"] = "true"

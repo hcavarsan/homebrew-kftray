@@ -10,7 +10,11 @@ class Kftray < Formula
   depends_on "rust" => :build
   depends_on "node"
 
-  
+  on_linux do
+    depends_on "gtk+" 
+    depends_on "gtk+3" 
+    depends_on "libsoup@2"
+  end
 
   def install
     ENV["CI"] = "true"

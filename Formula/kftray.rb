@@ -12,6 +12,7 @@ class Kftray < Formula
 
   
   on_linux do
+    depends_on "gtk+" 
     depends_on "webkitgtk"
     depends_on "libsoup@2"
   end

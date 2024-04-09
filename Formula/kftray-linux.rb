@@ -2,7 +2,7 @@ class KftrayLinus < Formula
     desc "A cross-platform system tray app for Kubernetes port-forward management."
     homepage "https://github.com/hcavarsan/kftray"
     version "0.9.2"
-    url "https://github.com/hcavarsan/kftray/releases/latest/download/kftray_#{version}_amd64.AppImage"
+    url "https://github.com/hcavarsan/kftray/releases/download/v0.9.2/kftray_0.9.2_amd64.AppImage"
     sha256 "e48c48296b5a28fd1ff0d696c6a673d4dda1b81f1fb3fe927c155540239a12db"
 
     bottle :unneeded

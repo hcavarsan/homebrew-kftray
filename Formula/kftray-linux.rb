@@ -15,8 +15,18 @@ class KftrayLinus < Formula
     end
 
     def caveats; <<~EOS
+        ================================
+        
         Executable is linked as "kftray".
+        To integrate kftray into your system, you can run the following command:
+          #{bin}/kftray.AppImage --integrate
+         
+        ================================
+        
         For Linux: due to GTK limitations, it is necessary to install and enable the GNOME Shell extension for AppIndicator support to kftray works. See here: https://extensions.gnome.org/extension/615/appindicator-support/
+        
+        ================================
+        
         EOS
     end
 endΩ

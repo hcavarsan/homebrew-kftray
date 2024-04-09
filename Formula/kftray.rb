@@ -15,6 +15,7 @@ class Kftray < Formula
     depends_on "gtk+3" 
     depends_on "libsoup@2"
     depends_on "librsvg" 
+    depends_on "pkg-config" 
   end
 
   def install

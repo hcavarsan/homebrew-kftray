@@ -14,13 +14,13 @@ class Kftray < Formula
     depends_on "gtk+" 
     depends_on "gtk+3" 
     depends_on "libsoup@2"
+    depends_on "librsvg" 
   end
 
   def install
     ENV["CI"] = "true"
 
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
-    system "npm", "install", "pnpm"
     system "npm", "install"
 
     if build.head?

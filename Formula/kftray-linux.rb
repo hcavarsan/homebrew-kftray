@@ -29,4 +29,4 @@ class KftrayLinus < Formula
         
         EOS
     end
-endΩ
+end

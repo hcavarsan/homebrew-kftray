@@ -1,4 +1,4 @@
-class KftrayLinus < Formula
+class KftrayLinux < Formula
     desc "A cross-platform system tray app for Kubernetes port-forward management."
     homepage "https://github.com/hcavarsan/kftray"
     version "0.9.2"

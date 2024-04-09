@@ -33,6 +33,7 @@ class Kftray < Formula
         bin.install_symlink prefix/"kftray.app/Contents/MacOS/kftray"
       elsif OS.linux?
         ENV["CI"] = "true"
+        ENV["NO_STRIP"] = "true" 
         system "npm", "run", "tauri", "build", "--", "-b", "appimage", "--verbose" 
         appimage = "src-tauri/target/release/bundle/linux/kftray.AppImage"
         bin.install appimage

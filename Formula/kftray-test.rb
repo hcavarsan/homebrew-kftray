@@ -11,7 +11,7 @@ class KftrayTest < Formula
     url "https://github.com/hcavarsan/kftray/releases/download/v#{version}/kftray_universal.app.tar.gz"
     sha256 "01a7f4c4fbf2126657610132c144857665a70af37840bd5c1d4a2421d7f94b6a"
 
-    def install # This is a workaround to fix the issue with the tarball
+    def install
       prefix.install "../kftray.app"
       bin.install_symlink prefix/"kftray.app/Contents/MacOS/kftray"
     end

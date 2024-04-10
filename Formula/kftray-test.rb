@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-class Kftray < Formula
+class KftrayTest < Formula
   desc "A cross-platform system tray app for Kubernetes port-forward management."
   homepage "https://github.com/hcavarsan/kftray"
   version "0.9.6"

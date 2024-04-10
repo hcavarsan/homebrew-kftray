@@ -9,7 +9,7 @@ class KftrayTest < Formula
 
   on_macos do
     url "https://github.com/hcavarsan/kftray/releases/download/v#{version}/kftray_universal.app.tar.gz"
-    sha256 "30b400ced58fa2ba29fc8afaa81762875935e98d4a2c3dad47cb07966a5fbc1a"
+    sha256 "01a7f4c4fbf2126657610132c144857665a70af37840bd5c1d4a2421d7f94b6a"
 
     def install
       bin.install "kftray"

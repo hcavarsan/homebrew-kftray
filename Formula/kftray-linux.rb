@@ -15,8 +15,6 @@ class KftrayLinux < Formula
         ================================
         
         Executable is linked as "kftray".
-        To integrate kftray into your system, you can run the following command:
-          #{bin}/kftray.AppImage --integrate
          
         ================================
         

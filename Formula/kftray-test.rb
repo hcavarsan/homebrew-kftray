@@ -13,7 +13,7 @@ class KftrayTest < Formula
 
     def install
       prefix.install "Contents/MacOS/kftray"
-      bin.install_symlink prefix/"kftray.app/Contents/MacOS/kftray"
+      bin.install_symlink prefix/"kftray"
     end
   end
 

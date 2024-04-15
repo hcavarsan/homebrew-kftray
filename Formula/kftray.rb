@@ -23,6 +23,7 @@ class Kftray < Formula
 
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
     system "npm", "install"
+    system "npm", "install", "pnpm"
 
     if build.head?
 

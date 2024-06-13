@@ -22,8 +22,10 @@ class Kftray < Formula
   def install
     ENV["CI"] = "true"
 
+    # Ensure pnpm uses the correct Node.js version
+    ENV.prepend_path "PATH", Formula["node@20"].opt_bin
 
-    system "pnpm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "pnpm", "install", "--global", "--prefix=#{libexec}"
     system "pnpm", "install"
 
     if build.head?

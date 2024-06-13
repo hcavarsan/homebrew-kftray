@@ -9,6 +9,7 @@ class Kftray < Formula
 
   depends_on "rust" => :build
   depends_on "node@20" => :build
+  depends_on "pnpm" => :build
 
   on_linux do
     depends_on "gtk+"
@@ -21,19 +22,21 @@ class Kftray < Formula
   def install
     ENV["CI"] = "true"
 
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
-    system "npm", "install"
-    system "npm", "install", "pnpm"
+    # Ensure pnpm uses the correct Node.js version
+    ENV.prepend_path "PATH", Formula["node@20"].opt_bin
+
+    system "pnpm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "pnpm", "install"
 
     if build.head?
       if OS.mac?
-        system "npm", "run", "tauri", "build", "--", "-b", "app"
+        system "pnpm", "run", "tauri", "build", "--", "-b", "app"
         app_bundle = "kftray.app"
         prefix.install "src-tauri/target/release/bundle/macos/#{app_bundle}"
         bin.install_symlink prefix/"kftray.app/Contents/MacOS/kftray"
       elsif OS.linux?
         ENV["NO_STRIP"] = "true"
-        system "npm", "run", "tauri", "build", "--", "-b", "appimage", "--verbose"
+        system "pnpm", "run", "tauri", "build", "--", "-b", "appimage", "--verbose"
         appimage = "src-tauri/target/release/bundle/linux/kftray.AppImage"
         bin.install appimage
         chmod 0755, bin/"kftray.AppImage"

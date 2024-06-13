@@ -25,10 +25,6 @@ class Kftray < Formula
     # Ensure pnpm uses the correct Node.js version
     ENV.prepend_path "PATH", Formula["node@20"].opt_bin
 
-    # Create the libexec directory if it does not exist
-    libexec.mkpath
-
-    system "pnpm", "install", "--global", "--prefix=#{libexec}"
     system "pnpm", "install"
 
     if build.head?

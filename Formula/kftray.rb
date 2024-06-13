@@ -31,7 +31,7 @@ class Kftray < Formula
       if OS.mac?
         system "pnpm", "run", "tauri", "build", "-b", "app"
         app_bundle = "kftray.app"
-        prefix.install "src-tauri/target/release/bundle/macos/#{app_bundle}"
+        prefix.install "target/release/bundle/macos/#{app_bundle}"
         bin.install_symlink prefix/"kftray.app/Contents/MacOS/kftray"
       elsif OS.linux?
         ENV["NO_STRIP"] = "true"

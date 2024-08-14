@@ -2,7 +2,7 @@ cask "kftray" do
     version :latest
     sha256 :no_check
 
-    url "https://github.com/hcavarsan/kftray/releases/latest/download/kftray-macos.zip"
+    url "https://github.com/hcavarsan/kftray/releases/latest/download/kftray_universal.app.tar.gz"
     name "kftray"
     desc "A tray app with Tauri and React"
     homepage "https://github.com/hcavarsan/kftray"

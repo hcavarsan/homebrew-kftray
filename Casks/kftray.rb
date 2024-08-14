@@ -1,22 +1,11 @@
 cask "kftray" do
-    version :latest
-    sha256 :no_check
+    version "0.12.2"
+    sha256 "ce688379958b5adef109563737c09b374faaf3ef933f06612874a71d9a8419b5"
 
     url "https://github.com/hcavarsan/kftray/releases/latest/download/kftray_universal.app.tar.gz"
     name "kftray"
-    desc "A tray app with Tauri and React"
-    homepage "https://github.com/hcavarsan/kftray"
+    desc "A tray to manage your Kubernetes port-forwarding"
+    homepage "https://kftray.app"
 
     app "kftray.app"
-
-    zap trash: [
-      "~/Library/Application Support/kftray",
-      "~/Library/Preferences/com.kftray.app.plist",
-      "~/Library/Saved Application State/com.kftray.app.savedState",
-    ]
-
-    caveats <<~EOS
-      To link kftray to the Applications folder, you can run the following command:
-        ln -sf #{staged_path}/kftray.app /Applications/kftray.app
-    EOS
   end

@@ -1,8 +1,8 @@
 cask "kftray" do
-    version "0.16.0"
-    sha256 "4dd4480b7856b1360f3b07cf19ba40afeace0c95c4d2cf96d9852c12154014a7"
+    version "0.16.1"
+    sha256 "bb6991fb8e448405a5b906c38abd8b98fb65188dd4efc77c41000bc7aac2f4f3"
 
-    url "https://github.com/hcavarsan/kftray/releases/download/v0.16.0/kftray_universal.app.tar.gz"
+    url "https://github.com/hcavarsan/kftray/releases/download/v0.16.1/kftray_universal.app.tar.gz"
     name "kftray"
     desc "A tray to manage your Kubernetes port-forwarding"
     homepage "https://kftray.app"

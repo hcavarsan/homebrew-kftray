@@ -7,30 +7,26 @@ class Kftui < Formula
     if Hardware::CPU.arm? || Hardware::CPU.intel?
       url "https://github.com/hcavarsan/kftray/releases/download/v0.22.1/kftui_macos_universal"
       sha256 "c5a25b297f982616439d7cb0303b96095db0602c751724624baa372bf5018c72"
-
-      def install
-        bin.install "kftui_macos_universal" => "kftui"
-      end
     end
   end
 
   on_linux do
-    if Hardware::CPU.intel?
-      if Hardware::CPU.is_64_bit?
-        url "https://github.com/hcavarsan/kftray/releases/download/v0.22.1/kftui_linux_amd64"
-        sha256 "c5a25b297f982616439d7cb0303b96095db0602c751724624baa372bf5018c72"
-
-        def install
-          bin.install "kftui_linux_amd64" => "kftui"
-        end
-      end
-    end
-
-    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+    if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
+      url "https://github.com/hcavarsan/kftray/releases/download/v0.22.1/kftui_linux_amd64"
+      sha256 "c5a25b297f982616439d7cb0303b96095db0602c751724624baa372bf5018c72"
+    elsif Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
       url "https://github.com/hcavarsan/kftray/releases/download/v0.22.1/kftui_linux_arm64"
       sha256 "c5a25b297f982616439d7cb0303b96095db0602c751724624baa372bf5018c72"
+    end
+  end
 
-      def install
+  def install
+    if OS.mac?
+      bin.install "kftui_macos_universal" => "kftui"
+    elsif OS.linux?
+      if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
+        bin.install "kftui_linux_amd64" => "kftui"
+      elsif Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
         bin.install "kftui_linux_arm64" => "kftui"
       end
     end
@@ -39,3 +35,4 @@ class Kftui < Formula
   test do
     system "#{bin}/kftui", "--version"
   end
+end

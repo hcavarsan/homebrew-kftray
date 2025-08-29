@@ -1,9 +1,9 @@
 class KftrayLinux < Formula
     desc "A cross-platform system tray app for Kubernetes port-forward management."
     homepage "https://github.com/hcavarsan/kftray"
-    version "0.22.5"
-    url "https://github.com/hcavarsan/kftray/releases/download/v0.22.5/kftray_0.22.5_amd64.AppImage"
-    sha256 "62a1ff349dcc5055cc061098229ae1bcd39a4ae56bdf87294d98288370fe553a"
+    version "0.22.7"
+    url "https://github.com/hcavarsan/kftray/releases/download/v0.22.7/kftray_0.22.7_amd64.AppImage"
+    sha256 "d29808f04404a5f4870ca4eaf8a05d2d22b767eff943cc82611ebd4618e4b805"
 
     def install
         prefix.install Dir["*"]

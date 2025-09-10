@@ -1,6 +1,6 @@
 cask "kftray" do
     version "0.23.6"
-    sha256 "5a419d6b8a2927a6290b85e7157fbc29f71cdb9beebb4606ea7b77fa553be0e9"
+    sha256 "5a559e8b661433443b2c92bfa546bb1aa115e7573ce2aba3dd205b42cef4a211"
 
     url "https://github.com/hcavarsan/kftray/releases/download/v0.23.6/kftray_universal.app.tar.gz"
     name "kftray"

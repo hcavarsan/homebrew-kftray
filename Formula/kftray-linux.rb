@@ -3,7 +3,7 @@ class KftrayLinux < Formula
     homepage "https://github.com/hcavarsan/kftray"
     version "0.23.6"
     url "https://github.com/hcavarsan/kftray/releases/download/v0.23.6/kftray_0.23.6_amd64.AppImage"
-    sha256 "d6fcef88018a6f136c524377979910559f477cd0fba4d54f58d0dc8298516324"
+    sha256 "f2bf68433671d3dd3613fd443fb59aa62a6441cf6e6c53dba31f1b360c3c74bd"
 
     def install
         prefix.install Dir["*"]

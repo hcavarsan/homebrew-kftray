@@ -5,18 +5,18 @@ class Kftui < Formula
 
   on_macos do
     if Hardware::CPU.arm? || Hardware::CPU.intel?
-      url "https://github.com/hcavarsan/kftray/releases/download/v0.25.5/kftui_macos_universal"
-      sha256 "34abe1add8c738384cf19613fb41eda8225e76ed342146858c52161abf8c15b4"
+      url "https://github.com/hcavarsan/kftray/releases/download/v0.25.6/kftui_macos_universal"
+      sha256 "73f68602658b4f133a26d2c16ac88a8ec1f83ad108071af29a19d991bb6fc8bc"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/hcavarsan/kftray/releases/download/v0.25.5/kftui_linux_amd64"
-      sha256 "d87248aa9354087c8e0281d48334bcfcad8565edee05adbf6012322a109ed97e"
+      url "https://github.com/hcavarsan/kftray/releases/download/v0.25.6/kftui_linux_amd64"
+      sha256 "c68c563db2d5243c607646ff7688a312d890fe11d7e2bd09de19aa0349267a19"
     elsif Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/hcavarsan/kftray/releases/download/v0.25.5/kftui_linux_arm64"
-      sha256 "57bb1ead6b125da06fcd374527ef60707955d222a3654109a527239ed1dc0b6e"
+      url "https://github.com/hcavarsan/kftray/releases/download/v0.25.6/kftui_linux_arm64"
+      sha256 "3a11a416ef65b6f2583c53a9e4a07c7615449be87926b31c401ac5e5111f4aee"
     end
   end
 

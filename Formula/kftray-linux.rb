@@ -3,15 +3,20 @@ class KftrayLinux < Formula
   homepage "https://github.com/hcavarsan/kftray"
   version "0.26.2"
 
+  NEWER_GLIBC_AMD64_URL = "https://github.com/hcavarsan/kftray/releases/download/v0.26.2/kftray_0.26.2_newer-glibc_amd64.AppImage"
+  NEWER_GLIBC_AMD64_SHA = "92bc6d374dc1d6ea1a4ac5b4890bec09e0345d77243d485777bfda64600de9b9"
+  NEWER_GLIBC_ARM64_URL = "https://github.com/hcavarsan/kftray/releases/download/v0.26.2/kftray_0.26.2_newer-glibc_aarch64.AppImage"
+  NEWER_GLIBC_ARM64_SHA = "872677eb61e597c3cb4ca285c12f9e5c10c4261722adf37443e4aa9c3ac126a7"
+
   on_linux do
       on_intel do
-          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_amd64.AppImage"
-          sha256 "98fcfd2236da6117be716fa9f174b62502e7fb8b6e0dc29b5c1e76e5d13c4cb2"
+          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.2/kftray_0.26.2_amd64.AppImage"
+          sha256 "5cbd17661f09682d45b009bd27ebf65758c676de68bfbaf771c278c8d08f4316"
       end
 
       on_arm do
-          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_aarch64.AppImage"
-          sha256 "9ad0eca72a4deda7970b7d0b585c679edc09e08c01c500be198ad006f0aa83d3"
+          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.2/kftray_0.26.2_aarch64.AppImage"
+          sha256 "d7262794e2a23c5a3aa76ba6c6dfed6e691892434bd9a4e1512c797ed5fe6408"
       end
   end
 
@@ -33,10 +38,10 @@ class KftrayLinux < Formula
 
           if use_newer_glibc
               if Hardware::CPU.arm?
-                  selected_url = "https://github.com/hcavarsan/kftray/releases/download/v#{version}/kftray_#{version}_newer-glibc_aarch64.AppImage"
+                  selected_url = NEWER_GLIBC_ARM64_URL
                   selected_filename = "kftray_#{version}_newer-glibc_aarch64.AppImage"
               else
-                  selected_url = "https://github.com/hcavarsan/kftray/releases/download/v#{version}/kftray_#{version}_newer-glibc_amd64.AppImage"
+                  selected_url = NEWER_GLIBC_AMD64_URL
                   selected_filename = "kftray_#{version}_newer-glibc_amd64.AppImage"
               end
 

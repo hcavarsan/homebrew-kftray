@@ -3,26 +3,43 @@ class KftrayLinux < Formula
     homepage "https://github.com/hcavarsan/kftray"
     version "0.26.0"
 
-    def self.select_version
+    def self.select_variant
+        os_variant = :legacy
+
         if OS.linux? && File.exist?("/etc/os-release")
             os_release = File.read("/etc/os-release")
 
             if os_release.match(/^NAME.*Ubuntu/mi)
                 version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
-                return :newer_glibc if version_match && version_match[1].to_i >= 24
+                os_variant = :newer_glibc if version_match && version_match[1].to_i >= 24
             end
 
             if os_release.match(/^NAME.*Debian/mi)
                 version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
-                return :newer_glibc if version_match && version_match[1].to_i >= 13
+                os_variant = :newer_glibc if version_match && version_match[1].to_i >= 13
             end
         end
-        :legacy
+
+        arch = if Hardware::CPU.arm?
+            :arm64
+        else
+            :amd64
+        end
+
+        { os: os_variant, arch: arch }
     end
 
-    if select_version == :newer_glibc
+    variant = select_variant
+
+    if variant[:os] == :newer_glibc && variant[:arch] == :amd64
         url "https://github.com/hcavarsan/kftray/releases/download/v0.26.0/kftray_0.26.0_newer-glibc_amd64.AppImage"
-        sha256 "NEWER_GLIBC_SHA256_PLACEHOLDER"
+        sha256 "NEWER_GLIBC_AMD64_SHA256_PLACEHOLDER"
+    elsif variant[:os] == :newer_glibc && variant[:arch] == :arm64
+        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.0/kftray_0.26.0_newer-glibc_aarch64.AppImage"
+        sha256 "NEWER_GLIBC_ARM64_SHA256_PLACEHOLDER"
+    elsif variant[:os] == :legacy && variant[:arch] == :arm64
+        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.0/kftray_0.26.0_aarch64.AppImage"
+        sha256 "LEGACY_ARM64_SHA256_PLACEHOLDER"
     else
         url "https://github.com/hcavarsan/kftray/releases/download/v0.26.0/kftray_0.26.0_amd64.AppImage"
         sha256 "c02d6bd5d31378edf7b107a16d8ab0a18627e92318852344f6e6281bdea3af94"
@@ -36,23 +53,19 @@ class KftrayLinux < Formula
     end
 
     def caveats
-        detected_version = self.class.select_version
-        version_info = case detected_version
-        when :newer_glibc
-            "newer glibc version (auto-detected Ubuntu 24+ or Debian 13+)"
-        else
-            "legacy glibc version (default fallback)"
-        end
+        variant = self.class.select_variant
+        arch_str = variant[:arch] == :arm64 ? "ARM64" : "AMD64"
+        os_str = variant[:os] == :newer_glibc ? "newer glibc (Ubuntu 24+/Debian 13+)" : "legacy glibc"
 
         <<~EOS
         ================================
 
         Executable is linked as "kftray".
-        Installed: #{version_info}
+        Installed: #{os_str} for #{arch_str}
 
         Version selection is automatic based on your system:
-        - Ubuntu 24.04+ or Debian 13+: newer glibc version
-        - All other systems: legacy version (default fallback)
+        - OS: Ubuntu 24.04+/Debian 13+ uses newer glibc, others use legacy
+        - Architecture: #{arch_str} detected
 
         ================================
 

@@ -71,7 +71,7 @@ class KftrayLinux < Formula
       Type=Application
       Name=kftray
       Comment=A cross-platform system tray app for Kubernetes port-forward management
-      Exec=#{bin}/kftray
+      Exec=#{HOMEBREW_PREFIX}/bin/kftray
       Icon=kftray
       Categories=Development;Network;
       Terminal=false

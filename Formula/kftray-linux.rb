@@ -1,7 +1,7 @@
 class KftrayLinux < Formula
     desc "A cross-platform system tray app for Kubernetes port-forward management."
     homepage "https://github.com/hcavarsan/kftray"
-    version "0.26.0"
+    version "0.26.1"
 
     def self.select_variant
         os_variant = :legacy
@@ -32,17 +32,17 @@ class KftrayLinux < Formula
     variant = select_variant
 
     if variant[:os] == :newer_glibc && variant[:arch] == :amd64
-        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.0/kftray_0.26.0_newer-glibc_amd64.AppImage"
-        sha256 "NEWER_GLIBC_AMD64_SHA256_PLACEHOLDER"
+        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_amd64.AppImage"
+        sha256 "5d081b153ade66583905cfa8080f1f34bcd053db45a4fc501b75a6a37fa39daf"
     elsif variant[:os] == :newer_glibc && variant[:arch] == :arm64
-        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.0/kftray_0.26.0_newer-glibc_aarch64.AppImage"
-        sha256 "NEWER_GLIBC_ARM64_SHA256_PLACEHOLDER"
+        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_aarch64.AppImage"
+        sha256 "ee61b918fb529d98bc650846ab96cf4177c5e6009e2842a44e2e5ed1931d0805"
     elsif variant[:os] == :legacy && variant[:arch] == :arm64
-        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.0/kftray_0.26.0_aarch64.AppImage"
-        sha256 "LEGACY_ARM64_SHA256_PLACEHOLDER"
+        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_aarch64.AppImage"
+        sha256 "9ad0eca72a4deda7970b7d0b585c679edc09e08c01c500be198ad006f0aa83d3"
     else
-        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.0/kftray_0.26.0_amd64.AppImage"
-        sha256 "c02d6bd5d31378edf7b107a16d8ab0a18627e92318852344f6e6281bdea3af94"
+        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_amd64.AppImage"
+        sha256 "98fcfd2236da6117be716fa9f174b62502e7fb8b6e0dc29b5c1e76e5d13c4cb2"
     end
 
     def install

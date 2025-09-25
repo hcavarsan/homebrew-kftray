@@ -77,7 +77,7 @@ class KftrayLinux < Formula
       desktop_dir.mkpath
       (desktop_dir/"kftray.desktop").write desktop_content
 
-      user_desktop_dir = Pathname.new(ENV["HOME"])/"/.local/share/applications"
+      user_desktop_dir = Pathname.new(ENV["HOME"])/".local/share/applications"
       user_desktop_dir.mkpath
       (user_desktop_dir/"kftray.desktop").write desktop_content
 
@@ -90,7 +90,7 @@ class KftrayLinux < Formula
           icon_dir = share/"icons/hicolor/#{config[:size]}x#{config[:size]}/apps"
           icon_dir.mkpath
 
-          user_icon_dir = Pathname.new(ENV["HOME"])/"/.local/share/icons/hicolor/#{config[:size]}x#{config[:size]}/apps"
+          user_icon_dir = Pathname.new(ENV["HOME"])/".local/share/icons/hicolor/#{config[:size]}x#{config[:size]}/apps"
           user_icon_dir.mkpath
 
           system "curl", "-L", "-o", "kftray-#{config[:size]}.png",
@@ -106,7 +106,7 @@ class KftrayLinux < Formula
 
       scalable_icon_dir = share/"icons/hicolor/scalable/apps"
       scalable_icon_dir.mkpath
-      user_scalable_icon_dir = Pathname.new(ENV["HOME"])/"/.local/share/icons/hicolor/scalable/apps"
+      user_scalable_icon_dir = Pathname.new(ENV["HOME"])/".local/share/icons/hicolor/scalable/apps"
       user_scalable_icon_dir.mkpath
 
       system "curl", "-L", "-o", "kftray.svg",
@@ -121,7 +121,7 @@ class KftrayLinux < Formula
 
       large_icon_dir = share/"icons/hicolor/256x256/apps"
       large_icon_dir.mkpath
-      user_large_icon_dir = Pathname.new(ENV["HOME"])/"/.local/share/icons/hicolor/256x256/apps"
+      user_large_icon_dir = Pathname.new(ENV["HOME"])/".local/share/icons/hicolor/256x256/apps"
       user_large_icon_dir.mkpath
 
       system "curl", "-L", "-o", "kftray-256.png",

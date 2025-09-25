@@ -77,6 +77,10 @@ class KftrayLinux < Formula
       desktop_dir.mkpath
       (desktop_dir/"kftray.desktop").write desktop_content
 
+      user_desktop_dir = Pathname.new(ENV["HOME"])/"/.local/share/applications"
+      user_desktop_dir.mkpath
+      (user_desktop_dir/"kftray.desktop").write desktop_content
+
       icon_configs = [
           { size: "32", file: "32x32.png" },
           { size: "128", file: "128x128.png" }
@@ -86,32 +90,47 @@ class KftrayLinux < Formula
           icon_dir = share/"icons/hicolor/#{config[:size]}x#{config[:size]}/apps"
           icon_dir.mkpath
 
+          user_icon_dir = Pathname.new(ENV["HOME"])/"/.local/share/icons/hicolor/#{config[:size]}x#{config[:size]}/apps"
+          user_icon_dir.mkpath
+
           system "curl", "-L", "-o", "kftray-#{config[:size]}.png",
                  "https://raw.githubusercontent.com/hcavarsan/kftray/main/crates/kftray-tauri/icons/#{config[:file]}"
 
           if File.exist?("kftray-#{config[:size]}.png")
-              (icon_dir/"kftray.png").write File.read("kftray-#{config[:size]}.png")
+              icon_content = File.read("kftray-#{config[:size]}.png")
+              (icon_dir/"kftray.png").write icon_content
+              (user_icon_dir/"kftray.png").write icon_content
               rm "kftray-#{config[:size]}.png"
           end
       end
 
       scalable_icon_dir = share/"icons/hicolor/scalable/apps"
       scalable_icon_dir.mkpath
+      user_scalable_icon_dir = Pathname.new(ENV["HOME"])/"/.local/share/icons/hicolor/scalable/apps"
+      user_scalable_icon_dir.mkpath
+
       system "curl", "-L", "-o", "kftray.svg",
              "https://raw.githubusercontent.com/hcavarsan/kftray/main/img/logo.svg"
 
       if File.exist?("kftray.svg")
-          (scalable_icon_dir/"kftray.svg").write File.read("kftray.svg")
+          svg_content = File.read("kftray.svg")
+          (scalable_icon_dir/"kftray.svg").write svg_content
+          (user_scalable_icon_dir/"kftray.svg").write svg_content
           rm "kftray.svg"
       end
 
       large_icon_dir = share/"icons/hicolor/256x256/apps"
       large_icon_dir.mkpath
+      user_large_icon_dir = Pathname.new(ENV["HOME"])/"/.local/share/icons/hicolor/256x256/apps"
+      user_large_icon_dir.mkpath
+
       system "curl", "-L", "-o", "kftray-256.png",
              "https://raw.githubusercontent.com/hcavarsan/kftray/main/icon.png"
 
       if File.exist?("kftray-256.png")
-          (large_icon_dir/"kftray.png").write File.read("kftray-256.png")
+          large_icon_content = File.read("kftray-256.png")
+          (large_icon_dir/"kftray.png").write large_icon_content
+          (user_large_icon_dir/"kftray.png").write large_icon_content
           rm "kftray-256.png"
       end
   end
@@ -156,12 +175,13 @@ class KftrayLinux < Formula
 
       DESKTOP INTEGRATION:
 
-      Desktop entry and icons have been installed:
-      - Desktop file: /home/linuxbrew/.linuxbrew/share/applications/kftray.desktop
-      - Icons: /home/linuxbrew/.linuxbrew/share/icons/hicolor/*/apps/kftray.*
+      Desktop entry and icons have been installed to both system and user locations:
+      - System: /home/linuxbrew/.linuxbrew/share/applications/kftray.desktop
+      - User: ~/.local/share/applications/kftray.desktop
+      - Icons: ~/.local/share/icons/hicolor/*/apps/kftray.*
 
-      To update desktop database (optional):
-      update-desktop-database /home/linuxbrew/.linuxbrew/share/applications 2>/dev/null || true
+      To refresh the desktop database:
+      update-desktop-database ~/.local/share/applications 2>/dev/null || true
 
       ================================
 

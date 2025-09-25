@@ -45,14 +45,22 @@ class KftrayLinux < Formula
               prefix.install selected_filename
               bin.install_symlink("#{prefix}/#{selected_filename}" => "kftray")
           else
-              appimage_name = url.split("/").last
-              prefix.install Dir["*"]
+              downloaded_files = Dir["*.AppImage"]
+              if downloaded_files.empty?
+                  odie "No AppImage file found after download"
+              end
+              appimage_name = downloaded_files.first
+              prefix.install appimage_name
               chmod(0755, "#{prefix}/#{appimage_name}")
               bin.install_symlink("#{prefix}/#{appimage_name}" => "kftray")
           end
       else
-          appimage_name = url.split("/").last
-          prefix.install Dir["*"]
+          downloaded_files = Dir["*.AppImage"]
+          if downloaded_files.empty?
+              odie "No AppImage file found after download"
+          end
+          appimage_name = downloaded_files.first
+          prefix.install appimage_name
           chmod(0755, "#{prefix}/#{appimage_name}")
           bin.install_symlink("#{prefix}/#{appimage_name}" => "kftray")
       end

@@ -157,11 +157,11 @@ class KftrayLinux < Formula
       DESKTOP INTEGRATION:
 
       Desktop entry and icons have been installed:
-      - Desktop file: ~/.linuxbrew/share/applications/kftray.desktop
-      - Icons: ~/.linuxbrew/share/icons/hicolor/*/apps/kftray.*
+      - Desktop file: /home/linuxbrew/.linuxbrew/share/applications/kftray.desktop
+      - Icons: /home/linuxbrew/.linuxbrew/share/icons/hicolor/*/apps/kftray.*
 
       To update desktop database (optional):
-      update-desktop-database ~/.linuxbrew/share/applications 2>/dev/null || true
+      update-desktop-database /home/linuxbrew/.linuxbrew/share/applications 2>/dev/null || true
 
       ================================
 

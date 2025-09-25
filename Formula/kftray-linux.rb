@@ -32,11 +32,11 @@ class KftrayLinux < Formula
     variant = select_variant
 
     if variant[:os] == :newer_glibc && variant[:arch] == :amd64
-        url "https://github.com/hcavarsan/kftray/releases/download/v0.25.1/kftray_0.25.1_amd64.AppImage"
-        sha256 "sdffg"
+        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_amd64.AppImage"
+        sha256 "5d081b153ade66583905cfa8080f1f34bcd053db45a4fc501b75a6a37fa39daf"
     elsif variant[:os] == :newer_glibc && variant[:arch] == :arm64
-        url "https://github.com/hcavarsan/kftray/releases/download/v0.25.1/kftray_0.25.1_aarch64.AppImage"
-        sha256 "ddffgf"
+        url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_aarch64.AppImage"
+        sha256 "ee61b918fb529d98bc650846ab96cf4177c5e6009e2842a44e2e5ed1931d0805"
     elsif variant[:os] == :legacy && variant[:arch] == :arm64
         url "https://github.com/hcavarsan/kftray/releases/download/v0.26.1/kftray_0.26.1_aarch64.AppImage"
         sha256 "9ad0eca72a4deda7970b7d0b585c679edc09e08c01c500be198ad006f0aa83d3"

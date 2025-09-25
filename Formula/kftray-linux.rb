@@ -77,10 +77,6 @@ class KftrayLinux < Formula
       desktop_dir.mkpath
       (desktop_dir/"kftray.desktop").write desktop_content
 
-      user_desktop_dir = Pathname.new(ENV["HOME"])/".local/share/applications"
-      user_desktop_dir.mkpath
-      (user_desktop_dir/"kftray.desktop").write desktop_content
-
       icon_configs = [
           { size: "32", file: "32x32.png" },
           { size: "128", file: "128x128.png" }
@@ -90,49 +86,53 @@ class KftrayLinux < Formula
           icon_dir = share/"icons/hicolor/#{config[:size]}x#{config[:size]}/apps"
           icon_dir.mkpath
 
-          user_icon_dir = Pathname.new(ENV["HOME"])/".local/share/icons/hicolor/#{config[:size]}x#{config[:size]}/apps"
-          user_icon_dir.mkpath
-
           system "curl", "-L", "-o", "kftray-#{config[:size]}.png",
                  "https://raw.githubusercontent.com/hcavarsan/kftray/main/crates/kftray-tauri/icons/#{config[:file]}"
 
           if File.exist?("kftray-#{config[:size]}.png")
-              icon_content = File.read("kftray-#{config[:size]}.png")
-              (icon_dir/"kftray.png").write icon_content
-              (user_icon_dir/"kftray.png").write icon_content
+              (icon_dir/"kftray.png").write File.read("kftray-#{config[:size]}.png")
               rm "kftray-#{config[:size]}.png"
           end
       end
 
       scalable_icon_dir = share/"icons/hicolor/scalable/apps"
       scalable_icon_dir.mkpath
-      user_scalable_icon_dir = Pathname.new(ENV["HOME"])/".local/share/icons/hicolor/scalable/apps"
-      user_scalable_icon_dir.mkpath
 
       system "curl", "-L", "-o", "kftray.svg",
              "https://raw.githubusercontent.com/hcavarsan/kftray/main/img/logo.svg"
 
       if File.exist?("kftray.svg")
-          svg_content = File.read("kftray.svg")
-          (scalable_icon_dir/"kftray.svg").write svg_content
-          (user_scalable_icon_dir/"kftray.svg").write svg_content
+          (scalable_icon_dir/"kftray.svg").write File.read("kftray.svg")
           rm "kftray.svg"
       end
 
       large_icon_dir = share/"icons/hicolor/256x256/apps"
       large_icon_dir.mkpath
-      user_large_icon_dir = Pathname.new(ENV["HOME"])/".local/share/icons/hicolor/256x256/apps"
-      user_large_icon_dir.mkpath
 
       system "curl", "-L", "-o", "kftray-256.png",
              "https://raw.githubusercontent.com/hcavarsan/kftray/main/icon.png"
 
       if File.exist?("kftray-256.png")
-          large_icon_content = File.read("kftray-256.png")
-          (large_icon_dir/"kftray.png").write large_icon_content
-          (user_large_icon_dir/"kftray.png").write large_icon_content
+          (large_icon_dir/"kftray.png").write File.read("kftray-256.png")
           rm "kftray-256.png"
       end
+  end
+
+  def post_install
+      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/applications"
+      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/32x32/apps"
+      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/128x128/apps"
+      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/256x256/apps"
+      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/scalable/apps"
+
+      system "cp", "#{HOMEBREW_PREFIX}/share/applications/kftray.desktop", "#{ENV["HOME"]}/.local/share/applications/"
+      system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/32x32/apps/kftray.png", "#{ENV["HOME"]}/.local/share/icons/hicolor/32x32/apps/" rescue nil
+      system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/128x128/apps/kftray.png", "#{ENV["HOME"]}/.local/share/icons/hicolor/128x128/apps/" rescue nil
+      system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/256x256/apps/kftray.png", "#{ENV["HOME"]}/.local/share/icons/hicolor/256x256/apps/" rescue nil
+      system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/scalable/apps/kftray.svg", "#{ENV["HOME"]}/.local/share/icons/hicolor/scalable/apps/" rescue nil
+
+      system "update-desktop-database", "#{ENV["HOME"]}/.local/share/applications" rescue nil
+      system "gtk-update-icon-cache", "#{ENV["HOME"]}/.local/share/icons/hicolor/", "--force", "--quiet" rescue nil
   end
 
   def caveats

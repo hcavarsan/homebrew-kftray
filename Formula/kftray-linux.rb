@@ -1,7 +1,7 @@
 class KftrayLinux < Formula
   desc "A cross-platform system tray app for Kubernetes port-forward management."
   homepage "https://github.com/hcavarsan/kftray"
-  version "0.26.1"
+  version "0.26.2"
 
   on_linux do
       on_intel do

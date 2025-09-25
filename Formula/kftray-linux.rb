@@ -77,59 +77,35 @@ class KftrayLinux < Formula
       desktop_dir.mkpath
       (desktop_dir/"kftray.desktop").write desktop_content
 
-      icon_configs = [
-          { size: "32", file: "32x32.png" },
-          { size: "128", file: "128x128.png" }
-      ]
+      icon_sizes = ["32x32", "48x48", "64x64", "128x128", "256x256"]
 
-      icon_configs.each do |config|
-          icon_dir = share/"icons/hicolor/#{config[:size]}x#{config[:size]}/apps"
+      icon_sizes.each do |size|
+          icon_dir = share/"icons/hicolor/#{size}/apps"
           icon_dir.mkpath
 
-          system "curl", "-L", "-o", "kftray-#{config[:size]}.png",
-                 "https://raw.githubusercontent.com/hcavarsan/kftray/main/crates/kftray-tauri/icons/#{config[:file]}"
+          system "curl", "-L", "-o", "kftray-#{size}.png",
+                 "https://raw.githubusercontent.com/hcavarsan/kftray-blog/main/img/logo.png"
 
-          if File.exist?("kftray-#{config[:size]}.png")
-              (icon_dir/"kftray.png").write File.read("kftray-#{config[:size]}.png")
-              rm "kftray-#{config[:size]}.png"
+          if File.exist?("kftray-#{size}.png")
+              (icon_dir/"kftray.png").write File.read("kftray-#{size}.png")
+              rm "kftray-#{size}.png"
           end
-      end
-
-      scalable_icon_dir = share/"icons/hicolor/scalable/apps"
-      scalable_icon_dir.mkpath
-
-      system "curl", "-L", "-o", "kftray.svg",
-             "https://raw.githubusercontent.com/hcavarsan/kftray/main/img/logo.svg"
-
-      if File.exist?("kftray.svg")
-          (scalable_icon_dir/"kftray.svg").write File.read("kftray.svg")
-          rm "kftray.svg"
-      end
-
-      large_icon_dir = share/"icons/hicolor/256x256/apps"
-      large_icon_dir.mkpath
-
-      system "curl", "-L", "-o", "kftray-256.png",
-             "https://raw.githubusercontent.com/hcavarsan/kftray/main/icon.png"
-
-      if File.exist?("kftray-256.png")
-          (large_icon_dir/"kftray.png").write File.read("kftray-256.png")
-          rm "kftray-256.png"
       end
   end
 
   def post_install
       system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/applications"
-      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/32x32/apps"
-      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/128x128/apps"
-      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/256x256/apps"
-      system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/scalable/apps"
+
+      icon_sizes = ["32x32", "48x48", "64x64", "128x128", "256x256"]
+      icon_sizes.each do |size|
+          system "mkdir", "-p", "#{ENV["HOME"]}/.local/share/icons/hicolor/#{size}/apps"
+      end
 
       system "cp", "#{HOMEBREW_PREFIX}/share/applications/kftray.desktop", "#{ENV["HOME"]}/.local/share/applications/"
-      system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/32x32/apps/kftray.png", "#{ENV["HOME"]}/.local/share/icons/hicolor/32x32/apps/" rescue nil
-      system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/128x128/apps/kftray.png", "#{ENV["HOME"]}/.local/share/icons/hicolor/128x128/apps/" rescue nil
-      system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/256x256/apps/kftray.png", "#{ENV["HOME"]}/.local/share/icons/hicolor/256x256/apps/" rescue nil
-      system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/scalable/apps/kftray.svg", "#{ENV["HOME"]}/.local/share/icons/hicolor/scalable/apps/" rescue nil
+
+      icon_sizes.each do |size|
+          system "cp", "#{HOMEBREW_PREFIX}/share/icons/hicolor/#{size}/apps/kftray.png", "#{ENV["HOME"]}/.local/share/icons/hicolor/#{size}/apps/" rescue nil
+      end
 
       system "update-desktop-database", "#{ENV["HOME"]}/.local/share/applications" rescue nil
       system "gtk-update-icon-cache", "#{ENV["HOME"]}/.local/share/icons/hicolor/", "--force", "--quiet" rescue nil

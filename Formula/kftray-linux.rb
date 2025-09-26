@@ -1,22 +1,27 @@
 class KftrayLinux < Formula
   desc "A cross-platform system tray app for Kubernetes port-forward management."
   homepage "https://github.com/hcavarsan/kftray"
-  version "0.26.2"
+  version "0.26.3"
 
-  NEWER_GLIBC_AMD64_URL = "https://github.com/hcavarsan/kftray/releases/download/v0.26.2/kftray_0.26.2_newer-glibc_amd64.AppImage"
-  NEWER_GLIBC_AMD64_SHA = "92bc6d374dc1d6ea1a4ac5b4890bec09e0345d77243d485777bfda64600de9b9"
-  NEWER_GLIBC_ARM64_URL = "https://github.com/hcavarsan/kftray/releases/download/v0.26.2/kftray_0.26.2_newer-glibc_aarch64.AppImage"
-  NEWER_GLIBC_ARM64_SHA = "872677eb61e597c3cb4ca285c12f9e5c10c4261722adf37443e4aa9c3ac126a7"
+  NEWER_GLIBC_AMD64_URL = "https://github.com/hcavarsan/kftray/releases/download/v0.26.3/kftray_0.26.3_newer-glibc_amd64.AppImage"
+  NEWER_GLIBC_AMD64_SHA = "33dc2cb31fda7beef26014d3b611ab0d13f32c659e080288de14eb10d69969e8"
+  NEWER_GLIBC_ARM64_URL = "https://github.com/hcavarsan/kftray/releases/download/v0.26.3/kftray_0.26.3_newer-glibc_aarch64.AppImage"
+  NEWER_GLIBC_ARM64_SHA = "d6b796a1b324eefbb2bb7a3928de25e0013c559ebd55e320f124eefd90580ebc"
+
+  NEWER_GLIBC_AMD64_URL = "https://github.com/hcavarsan/kftray/releases/download/v0.26.3/kftray_0.26.3_newer-glibc_amd64.AppImage"
+  NEWER_GLIBC_AMD64_SHA = "33dc2cb31fda7beef26014d3b611ab0d13f32c659e080288de14eb10d69969e8"
+  NEWER_GLIBC_ARM64_URL = "https://github.com/hcavarsan/kftray/releases/download/v0.26.3/kftray_0.26.3_newer-glibc_aarch64.AppImage"
+  NEWER_GLIBC_ARM64_SHA = "d6b796a1b324eefbb2bb7a3928de25e0013c559ebd55e320f124eefd90580ebc"
 
   on_linux do
       on_intel do
-          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.2/kftray_0.26.2_amd64.AppImage"
-          sha256 "5cbd17661f09682d45b009bd27ebf65758c676de68bfbaf771c278c8d08f4316"
+          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.3/kftray_0.26.3_amd64.AppImage"
+          sha256 "43ce13d8159888abf2c83b98ac98a7101070bccbea4767ee0cf989f1cd84081a"
       end
 
       on_arm do
-          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.2/kftray_0.26.2_aarch64.AppImage"
-          sha256 "d7262794e2a23c5a3aa76ba6c6dfed6e691892434bd9a4e1512c797ed5fe6408"
+          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.3/kftray_0.26.3_aarch64.AppImage"
+          sha256 "224f5c4a27a2887ab23a8bf7a1bb409f7b63a46a5b2632f080805db22e907f05"
       end
   end
 

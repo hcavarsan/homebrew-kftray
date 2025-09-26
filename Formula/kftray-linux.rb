@@ -31,6 +31,73 @@ class KftrayLinux < Formula
       install_desktop_integration
   end
 
+  def post_install
+      setup_user_directories
+      copy_desktop_files
+      update_desktop_database
+  end
+
+  def caveats
+      arch_str = Hardware::CPU.arm? ? "ARM64" : "AMD64"
+      variant_info = if OS.linux? && File.exist?("/etc/os-release")
+          os_release = File.read("/etc/os-release")
+          if os_release.match(/^NAME.*Ubuntu/mi)
+              version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
+              if version_match && version_match[1].to_i >= 24
+                  "Installed: newer glibc (Ubuntu #{version_match[1]}+) for #{arch_str}"
+              else
+                  "Installed: legacy glibc (Ubuntu #{version_match[1] if version_match}) for #{arch_str}"
+              end
+          elsif os_release.match(/^NAME.*Debian/mi)
+              version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
+              if version_match && version_match[1].to_i >= 13
+                  "Installed: newer glibc (Debian #{version_match[1]}+) for #{arch_str}"
+              else
+                  "Installed: legacy glibc (Debian #{version_match[1] if version_match}) for #{arch_str}"
+              end
+          else
+              "Installed: legacy glibc (unknown distro) for #{arch_str}"
+          end
+      else
+          "Installed: legacy glibc (non-Linux)"
+      end
+
+      <<~EOS
+        ================================
+
+        Executable is linked as "kftray".
+        #{variant_info}
+
+        Version selection is automatic based on your system:
+        - OS: Ubuntu 24.04+/Debian 13+ uses newer glibc, others use legacy
+        - Architecture: Auto-detected (#{arch_str})
+
+        ================================
+
+        DESKTOP INTEGRATION:
+
+        Desktop entry and icons have been installed to both system and user locations:
+        - System: #{HOMEBREW_PREFIX}/share/applications/kftray.desktop
+        - User: ~/.local/share/applications/kftray.desktop
+        - Icons: ~/.local/share/icons/hicolor/*/apps/kftray.*
+
+        To refresh the desktop database:
+        update-desktop-database ~/.local/share/applications 2>/dev/null || true
+
+        ================================
+
+        REQUIRED for Linux systems:
+
+        1. Install GNOME Shell extension for AppIndicator support:
+           https://extensions.gnome.org/extension/615/appindicator-support/
+
+        2. If kftray doesn't start, install missing system dependencies:
+           sudo apt install libayatana-appindicator3-dev librsvg2-dev
+
+        ================================
+      EOS
+  end
+
   private
 
   def needs_newer_glibc?
@@ -122,73 +189,6 @@ class KftrayLinux < Formula
               rm tmp_icon
           end
       end
-  end
-
-  def post_install
-      setup_user_directories
-      copy_desktop_files
-      update_desktop_database
-  end
-
-  def caveats
-      arch_str = Hardware::CPU.arm? ? "ARM64" : "AMD64"
-      variant_info = if OS.linux? && File.exist?("/etc/os-release")
-          os_release = File.read("/etc/os-release")
-          if os_release.match(/^NAME.*Ubuntu/mi)
-              version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
-              if version_match && version_match[1].to_i >= 24
-                  "Installed: newer glibc (Ubuntu #{version_match[1]}+) for #{arch_str}"
-              else
-                  "Installed: legacy glibc (Ubuntu #{version_match[1] if version_match}) for #{arch_str}"
-              end
-          elsif os_release.match(/^NAME.*Debian/mi)
-              version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
-              if version_match && version_match[1].to_i >= 13
-                  "Installed: newer glibc (Debian #{version_match[1]}+) for #{arch_str}"
-              else
-                  "Installed: legacy glibc (Debian #{version_match[1] if version_match}) for #{arch_str}"
-              end
-          else
-              "Installed: legacy glibc (unknown distro) for #{arch_str}"
-          end
-      else
-          "Installed: legacy glibc (non-Linux)"
-      end
-
-      <<~EOS
-        ================================
-
-        Executable is linked as "kftray".
-        #{variant_info}
-
-        Version selection is automatic based on your system:
-        - OS: Ubuntu 24.04+/Debian 13+ uses newer glibc, others use legacy
-        - Architecture: Auto-detected (#{arch_str})
-
-        ================================
-
-        DESKTOP INTEGRATION:
-
-        Desktop entry and icons have been installed to both system and user locations:
-        - System: #{HOMEBREW_PREFIX}/share/applications/kftray.desktop
-        - User: ~/.local/share/applications/kftray.desktop
-        - Icons: ~/.local/share/icons/hicolor/*/apps/kftray.*
-
-        To refresh the desktop database:
-        update-desktop-database ~/.local/share/applications 2>/dev/null || true
-
-        ================================
-
-        REQUIRED for Linux systems:
-
-        1. Install GNOME Shell extension for AppIndicator support:
-           https://extensions.gnome.org/extension/615/appindicator-support/
-
-        2. If kftray doesn't start, install missing system dependencies:
-           sudo apt install libayatana-appindicator3-dev librsvg2-dev
-
-        ================================
-      EOS
   end
 
   private

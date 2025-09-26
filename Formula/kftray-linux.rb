@@ -3,21 +3,15 @@ require "digest"
 class KftrayLinux < Formula
   desc "A cross-platform system tray app for Kubernetes port-forward management."
   homepage "https://github.com/hcavarsan/kftray"
-  version "0.26.5"
-
-  NEWER_GLIBC_AMD64_SHA = "1e50cc661bad68bff3272a2dbd232bb1747ab4d139adb99a5ee68bcad0a17514"
-  NEWER_GLIBC_ARM64_SHA = "ae7e98a10281c8f7ea8299886b0c71d71eacdba6cb065cfff04ca2f7d3432a91"
-
-
-  on_linux do
+  version "0.26.6"  on_linux do
       on_intel do
-          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.5/kftray_0.26.5_amd64.AppImage"
-          sha256 "326261afb4d7e414a69169cce932bde87e0f40da5f1d8059dc5b83f6b313d28f"
+          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.6/kftray_0.26.6_amd64.AppImage"
+          sha256 "8483da882bdb1a5f0a5568c4b2b9c05b1f21442061a73f91f31e18588010535a"
       end
 
       on_arm do
-          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.5/kftray_0.26.5_aarch64.AppImage"
-          sha256 "1d2d309d674f01aed09ed1b093f99ea444c06f196f5061e52e42bf9ee9f7cea6"
+          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.6/kftray_0.26.6_aarch64.AppImage"
+          sha256 "86cd2145f01e7a3f331934dd780e4b60e32bd278cf306ebfbe93a911c6bb4791"
       end
   end
 

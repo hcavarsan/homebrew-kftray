@@ -53,6 +53,7 @@ class KftrayLinux < Formula
       arch_suffix = Hardware::CPU.arm? ? "aarch64" : "amd64"
       filename = "kftray_#{version}_newer-glibc_#{arch_suffix}.AppImage"
       download_url = "https://github.com/hcavarsan/kftray/releases/download/v#{version}/#{filename}"
+      expected_sha = Hardware::CPU.arm? ? self.class::NEWER_GLIBC_ARM64_SHA : self.class::NEWER_GLIBC_AMD64_SHA
 
       system "curl", "-L", "-o", filename, download_url
 
@@ -130,8 +131,29 @@ class KftrayLinux < Formula
   end
 
   def caveats
-      variant_info = get_variant_info
       arch_str = Hardware::CPU.arm? ? "ARM64" : "AMD64"
+      variant_info = if OS.linux? && File.exist?("/etc/os-release")
+          os_release = File.read("/etc/os-release")
+          if os_release.match(/^NAME.*Ubuntu/mi)
+              version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
+              if version_match && version_match[1].to_i >= 24
+                  "Installed: newer glibc (Ubuntu #{version_match[1]}+) for #{arch_str}"
+              else
+                  "Installed: legacy glibc (Ubuntu #{version_match[1] if version_match}) for #{arch_str}"
+              end
+          elsif os_release.match(/^NAME.*Debian/mi)
+              version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
+              if version_match && version_match[1].to_i >= 13
+                  "Installed: newer glibc (Debian #{version_match[1]}+) for #{arch_str}"
+              else
+                  "Installed: legacy glibc (Debian #{version_match[1] if version_match}) for #{arch_str}"
+              end
+          else
+              "Installed: legacy glibc (unknown distro) for #{arch_str}"
+          end
+      else
+          "Installed: legacy glibc (non-Linux)"
+      end
 
       <<~EOS
         ================================
@@ -201,28 +223,4 @@ class KftrayLinux < Formula
       system "gtk-update-icon-cache", user_icons_dir, "--force", "--quiet" rescue nil
   end
 
-  def get_variant_info
-      return "Installed: legacy glibc (non-Linux)" unless OS.linux? && File.exist?("/etc/os-release")
-
-      os_release = File.read("/etc/os-release")
-      arch_str = Hardware::CPU.arm? ? "ARM64" : "AMD64"
-
-      if os_release.match(/^NAME.*Ubuntu/mi)
-          version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
-          if version_match && version_match[1].to_i >= 24
-              "Installed: newer glibc (Ubuntu #{version_match[1]}+) for #{arch_str}"
-          else
-              "Installed: legacy glibc (Ubuntu #{version_match[1] if version_match}) for #{arch_str}"
-          end
-      elsif os_release.match(/^NAME.*Debian/mi)
-          version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
-          if version_match && version_match[1].to_i >= 13
-              "Installed: newer glibc (Debian #{version_match[1]}+) for #{arch_str}"
-          else
-              "Installed: legacy glibc (Debian #{version_match[1] if version_match}) for #{arch_str}"
-          end
-      else
-          "Installed: legacy glibc (unknown distro) for #{arch_str}"
-      end
-  end
 end

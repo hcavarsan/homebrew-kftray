@@ -3,7 +3,13 @@ require "digest"
 class KftrayLinux < Formula
   desc "A cross-platform system tray app for Kubernetes port-forward management."
   homepage "https://github.com/hcavarsan/kftray"
-  version "0.26.6"  on_linux do
+  version "0.26.6"
+
+  NEWER_GLIBC_AMD64_SHA = "3231bd04fce115742fe715773f6f20662ed68091d10a932e1ded835f9b80a5c6"
+  NEWER_GLIBC_ARM64_SHA = "f3bd6f5e8a7ba2b19584f59a624b0f62ca34c3478e4166995631c39ea5504910"
+
+
+  on_linux do
       on_intel do
           url "https://github.com/hcavarsan/kftray/releases/download/v0.26.6/kftray_0.26.6_amd64.AppImage"
           sha256 "8483da882bdb1a5f0a5568c4b2b9c05b1f21442061a73f91f31e18588010535a"

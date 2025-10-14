@@ -55,6 +55,13 @@ class KftrayLinux < Formula
               else
                   "Installed: legacy glibc (Debian #{version_match[1] if version_match}) for #{arch_str}"
               end
+          elsif os_release.match(/^NAME.*Linux Mint/mi)
+              version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
+              if version_match && version_match[1].to_i >= 22
+                  "Installed: newer glibc (Linux Mint #{version_match[1]}+) for #{arch_str}"
+              else
+                  "Installed: legacy glibc (Linux Mint #{version_match[1] if version_match}) for #{arch_str}"
+              end
           else
               "Installed: legacy glibc (unknown distro) for #{arch_str}"
           end
@@ -69,7 +76,7 @@ class KftrayLinux < Formula
         #{variant_info}
 
         Version selection is automatic based on your system:
-        - OS: Ubuntu 24.04+/Debian 13+ uses newer glibc, others use legacy
+        - OS: Ubuntu 24.04+/Debian 13+/Linux Mint 22+ uses newer glibc, others use legacy
         - Architecture: Auto-detected (#{arch_str})
 
         ================================
@@ -111,6 +118,9 @@ class KftrayLinux < Formula
       elsif os_release.match(/^NAME.*Debian/mi)
           version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
           version_match && version_match[1].to_i >= 13
+      elsif os_release.match(/^NAME.*Linux Mint/mi)
+          version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
+          version_match && version_match[1].to_i >= 22
       else
           false
       end

@@ -42,7 +42,7 @@ class KftrayLinux < Formula
       variant_info = if OS.linux? && File.exist?("/etc/os-release")
           os_release = File.read("/etc/os-release")
           if os_release.match(/^NAME.*Linux Mint/mi)
-              version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
+              version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
               if version_match && version_match[1].to_i >= 22
                   "Installed: newer glibc (Linux Mint #{version_match[1]}+) for #{arch_str}"
               else
@@ -113,7 +113,7 @@ class KftrayLinux < Formula
       os_release = File.read("/etc/os-release")
 
       if os_release.match(/^NAME.*Linux Mint/mi)
-          version_match = os_release.match(/^VERSION_ID="(\d+)"/mi)
+          version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
           version_match && version_match[1].to_i >= 22
       elsif os_release.match(/^NAME.*Ubuntu/mi)
           version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)

@@ -3,21 +3,21 @@ require "digest"
 class KftrayLinux < Formula
   desc "A cross-platform system tray app for Kubernetes port-forward management."
   homepage "https://github.com/hcavarsan/kftray"
-  version "0.26.8"
+  version "0.27.0"
 
-  NEWER_GLIBC_AMD64_SHA = "66bccb1f47beaeb648672d093b37c9861539ee1dbf58a627a6033dc937f56296"
-  NEWER_GLIBC_ARM64_SHA = "8e1600b1f22e6daf5c3f54eed7997e6edeef50e61785332c9d1719ad92a153b8"
+  NEWER_GLIBC_AMD64_SHA = "c222b3542bcc18e353c243c955240f5ab6f821eebb4608be323b71e44830a9b1"
+  NEWER_GLIBC_ARM64_SHA = "ac785c842e09f0c74a28b3b2f9d4ce6a8c5b9da20e6b56b8849d33920de47c4d"
 
 
   on_linux do
       on_intel do
-          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.8/kftray_0.26.8_amd64.AppImage"
-          sha256 "f142e06ad5e49a3b04b6df0f7e297c917f435f8d64884e794a3f3ecc5ff51210"
+          url "https://github.com/hcavarsan/kftray/releases/download/v0.27.0/kftray_0.27.0_amd64.AppImage"
+          sha256 "1e27fa68808361b6a409132b0d9c8538a96c5a221e290312f1edc8ef69c448e9"
       end
 
       on_arm do
-          url "https://github.com/hcavarsan/kftray/releases/download/v0.26.8/kftray_0.26.8_aarch64.AppImage"
-          sha256 "e9e99268abc66a984cc6db5d09f33278070e3158dc4e75175faffb0c80d1a1c9"
+          url "https://github.com/hcavarsan/kftray/releases/download/v0.27.0/kftray_0.27.0_aarch64.AppImage"
+          sha256 "f16e7e1a1a83c4736975e9cac4a8fe793ab68bb5316fb92108071b839a5d3d07"
       end
   end
 
@@ -41,14 +41,7 @@ class KftrayLinux < Formula
       arch_str = Hardware::CPU.arm? ? "ARM64" : "AMD64"
       variant_info = if OS.linux? && File.exist?("/etc/os-release")
           os_release = File.read("/etc/os-release")
-          if os_release.match(/^NAME.*Linux Mint/mi)
-              version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
-              if version_match && version_match[1].to_i >= 22
-                  "Installed: newer glibc (Linux Mint #{version_match[1]}+) for #{arch_str}"
-              else
-                  "Installed: legacy glibc (Linux Mint #{version_match[1] if version_match}) for #{arch_str}"
-              end
-          elsif os_release.match(/^NAME.*Ubuntu/mi)
+          if os_release.match(/^NAME.*Ubuntu/mi)
               version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
               if version_match && version_match[1].to_i >= 24
                   "Installed: newer glibc (Ubuntu #{version_match[1]}+) for #{arch_str}"
@@ -76,7 +69,7 @@ class KftrayLinux < Formula
         #{variant_info}
 
         Version selection is automatic based on your system:
-        - OS: Ubuntu 24.04+/Debian 13+/Linux Mint 22+ uses newer glibc, others use legacy
+        - OS: Ubuntu 24.04+/Debian 13+ uses newer glibc, others use legacy
         - Architecture: Auto-detected (#{arch_str})
 
         ================================
@@ -112,10 +105,7 @@ class KftrayLinux < Formula
 
       os_release = File.read("/etc/os-release")
 
-      if os_release.match(/^NAME.*Linux Mint/mi)
-          version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
-          version_match && version_match[1].to_i >= 22
-      elsif os_release.match(/^NAME.*Ubuntu/mi)
+      if os_release.match(/^NAME.*Ubuntu/mi)
           version_match = os_release.match(/^VERSION_ID="(\d+)\.?\d*"/mi)
           version_match && version_match[1].to_i >= 24
       elsif os_release.match(/^NAME.*Debian/mi)

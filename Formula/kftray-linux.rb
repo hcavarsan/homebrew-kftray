@@ -5,16 +5,16 @@ class KftrayLinux < Formula
   homepage "https://github.com/hcavarsan/kftray"
   version "0.30.4"
   url "https://github.com/hcavarsan/kftray/releases/download/v0.30.4/kftray_0.30.4_amd64.AppImage"
-  sha256 "c18efd47fa3d02a7430154e188aae53787140319a7360a68bf3e5b546069ad96"
+  sha256 "63e3f808ca3a3ef04284b328866b05e045a96d47c46c4f78d84c9d4008faecbd"
 
   depends_on :linux
 
-  NEWER_GLIBC_AMD64_SHA = "dd35d55b59bc497288ef676402c9d43538eb4e2e7e0fb362b4403f97f0af89d7"
-  NEWER_GLIBC_ARM64_SHA = "d7a7900bb4cd22dafd8133956d2d0225baa0d324cf67ab9d4ae6f1a6671850ce"
+  NEWER_GLIBC_AMD64_SHA = "f6758ec414e978bccbbec61f1ffbc9a1c0126d0d7322235b66d99f491beda788"
+  NEWER_GLIBC_ARM64_SHA = "d55f2ae45b898d500445d256fd3e23d6657905cce45bb6bf6696f4b2acc13820"
 
   on_arm do
       url "https://github.com/hcavarsan/kftray/releases/download/v0.30.4/kftray_0.30.4_aarch64.AppImage"
-      sha256 "b28b59804c26aef63feab033253296c150e9664fe04abd05c70b503c5676d4ae"
+      sha256 "0d6683e863a3be46d777b0b3fa23162f5b85ab25ab83483679f50e38da8816ff"
   end
 
   def install
